@@ -13,7 +13,7 @@
 <script type="text/javascript" th:src="@{/js/d3pie.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/d3bar.js}"></script>
 <script>
-$.getJSON('/api/aggrbyco', function(countries) {
+$.getJSON('/api/aggrbyco/20', function(countries) {
 	var pie = new d3pie("piechart", {
 		"header": {
 			"title": {

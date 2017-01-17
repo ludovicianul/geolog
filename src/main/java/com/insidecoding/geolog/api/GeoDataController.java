@@ -37,15 +37,18 @@ public class GeoDataController {
 	}
 
 	@CrossOrigin
-	@RequestMapping(value = "/api/aggrbyco", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<List<SimpleAggr>> aggrbyco() {
+	@RequestMapping(value = "/api/aggrbyco/{max}", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<List<SimpleAggr>> aggrbyco(@PathVariable long max) {
 		LOG.info("aggregate by country");
 
 		List<LogFailedEntity> data = repo.findAll();
 
 		List<SimpleAggr> result = data.stream()
 				.collect(Collectors.groupingBy(LogFailedEntity::getCountry, Collectors.counting())).entrySet().stream()
-				.map(entry -> new SimpleAggr(entry.getKey(), entry.getValue())).collect(Collectors.toList());
+				.map(entry -> new SimpleAggr(entry.getKey(), entry.getValue()))
+				.sorted(Comparators.byLongFunction(SimpleAggr::getValue).reversed())
+				.limit(max)
+				.collect(Collectors.toList());
 
 		return new ResponseEntity<>(result, HttpStatus.OK);
 
@@ -60,8 +63,10 @@ public class GeoDataController {
 
 		List<SimpleAggr> result = data.stream()
 				.collect(Collectors.groupingBy(LogFailedEntity::getCity, Collectors.counting())).entrySet().stream()
-				.limit(max).map(entry -> new SimpleAggr(entry.getKey(), entry.getValue()))
-				.sorted(Comparators.byLongFunction(SimpleAggr::getValue).reversed()).collect(Collectors.toList());
+				.map(entry -> new SimpleAggr(entry.getKey(), entry.getValue()))
+				.sorted(Comparators.byLongFunction(SimpleAggr::getValue).reversed())
+				.limit(max)
+				.collect(Collectors.toList());
 
 		return new ResponseEntity<>(csvConvertor.toCsv(result), HttpStatus.OK);
 	}
