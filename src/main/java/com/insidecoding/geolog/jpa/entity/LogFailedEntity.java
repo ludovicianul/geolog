@@ -6,65 +6,65 @@ import javax.persistence.Id;
 @Entity
 public class LogFailedEntity {
 
-	@Id
-	private String ip;
+    @Id
+    private String ip;
 
-	private String city;
+    private String city;
 
-	private String country;
+    private String country;
 
-	private String org;
+    private String org;
 
-	private long attempts = 1;
+    private long attempts = 1;
 
-	public String getIp() {
-		return ip;
-	}
+    public String getIp() {
+        return ip;
+    }
 
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public String getCountry() {
-		return country;
-	}
+    public String getCountry() {
+        return country;
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
-	public String getOrg() {
-		return org;
-	}
+    public String getOrg() {
+        return org;
+    }
 
-	public void setOrg(String org) {
-		this.org = org;
-	}
+    public void setOrg(String org) {
+        this.org = org;
+    }
 
-	public long getAttempts() {
-		return attempts;
-	}
+    public long getAttempts() {
+        return attempts;
+    }
 
-	public void setAttempts(long attempts) {
-		this.attempts = attempts;
-	}
+    public void setAttempts(long attempts) {
+        this.attempts = attempts;
+    }
 
-	public void increaseAttempts() {
-		this.attempts++;
-	}
+    public void increaseAttempts() {
+        this.attempts++;
+    }
 
-	@Override
-	public String toString() {
-		return "LogFailedEntity [ip=" + ip + ", city=" + city + ", country=" + country + ", org=" + org + ", attempts="
-				+ attempts + "]";
-	}
+    @Override
+    public String toString() {
+        return "LogFailedEntity [ip=" + ip + ", city=" + city + ", country=" + country + ", org=" + org + ", attempts="
+                + attempts + "]";
+    }
 
 }

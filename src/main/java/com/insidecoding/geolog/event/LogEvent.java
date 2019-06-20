@@ -1,30 +1,62 @@
 package com.insidecoding.geolog.event;
 
-import javax.persistence.Id;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class LogEvent {
-	protected String user;
+    private static final Logger LOG = LoggerFactory.getLogger(LogEvent.class);
+    private static final String IPADDRESS_PATTERN = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+    private Pattern ipPattern = Pattern.compile(IPADDRESS_PATTERN);
 
-	@Id
-	protected String ip;
+    private String user;
 
-	public String user() {
-		return user;
-	}
+    private String ip;
 
-	public String ip() {
-		return ip;
-	}
+    public String user() {
+        return user;
+    }
 
-	public abstract Type type();
+    public String ip() {
+        return ip;
+    }
 
-	@Override
-	public String toString() {
-		return "LogEvent [user()=" + user() + ", ip()=" + ip() + ", type()=" + type() + "]";
-	}
+    public LogEvent(String line) {
+        this.fromLogLine(line);
+    }
+
+
+    public abstract Type type();
+
+    public abstract String splitBy();
+
+    @Override
+    public String toString() {
+        return "LogEvent [user()=" + user() + ", ip()=" + ip() + ", type()=" + type() + "]";
+    }
+
+    public LogEvent fromLogLine(String line) {
+        LOG.info("parsing line {}", line);
+        Matcher matcher = ipPattern.matcher(line);
+        if (matcher.find()) {
+            this.ip = matcher.group();
+        }
+        this.user = getUser(line, splitBy());
+        return this;
+    }
+
+    static String getUser(String line, String splitBy) {
+        if (line.contains(splitBy)) {
+            int indexOf = line.indexOf(splitBy) + splitBy.length();
+            return line.substring(indexOf).split(" ")[0].trim();
+        }
+        return null;
+    }
 
 }
 
 enum Type {
-	FAILED, SUCCESS;
+    FAILED, SUCCESS;
 }

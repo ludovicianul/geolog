@@ -1,19 +1,21 @@
 package com.insidecoding.geolog.event;
 
 public class SuccessLoginEvent extends LogEvent {
+    private static final String FROM = "from ";
 
-	@Override
-	public Type type() {
-		return Type.SUCCESS;
-	}
+    public SuccessLoginEvent(String line) {
+        super(line);
+    }
 
-	public static SuccessLoginEvent fromLogLine(String line) {
-		SuccessLoginEvent ev = new SuccessLoginEvent();
-		String[] userAndIp = line.substring(line.indexOf("for")).split("\\s+");
-		ev.user = userAndIp[1];
-		ev.ip = userAndIp[3];
+    @Override
+    public Type type() {
+        return Type.SUCCESS;
+    }
 
-		return ev;
-	}
+    @Override
+    public String splitBy() {
+        return FROM;
+    }
+
 
 }

@@ -2,9 +2,9 @@ package com.insidecoding.geolog.log;
 
 public interface LogDescriptor {
 
-	String fileLocation();
+    String fileLocation();
 
-	String failedPattern();
+    String[] failedPatterns();
 
-	String successPattern();
+    String[] successPatterns();
 }

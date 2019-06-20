@@ -19,7 +19,7 @@ Currently works on Ubuntu and other systems having ssh auth log in `/var/log/aut
 In order to get emails for potential breaches you need to configure a username and password in case you plan to use Gmail, or full details including smtp host and port for other services. You must also provite a `notify.to` email - this is where the emails are being sent.
 
 # demo
-http://vassal.dynu.com:6061/
+http://142.93.175.3:6060/
 
 # build and run
 This is a spring boot application. The packaging outputs an executable jar file that can be also run as a Linux script. In order to build and deploy it:
